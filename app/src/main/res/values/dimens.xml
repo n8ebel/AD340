@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_text_height">24sp</dimen>
+
+    <dimen name="zipcode_entry_icon_size">40dp</dimen>
+</resources>

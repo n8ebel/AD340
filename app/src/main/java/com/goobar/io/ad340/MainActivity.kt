@@ -1,5 +1,6 @@
 package com.goobar.io.ad340
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.goobar.io.ad340.details.ForecastDetailsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     val dailyForecastAdapter = DailyForecastListAdapter() {
       val msg = getString(R.string.forecast_clicked_format, it.temp, it.description)
       Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+      showForecastDetails(it)
     }
     dailyForecastList.adapter = dailyForecastAdapter
 
@@ -47,5 +51,12 @@ class MainActivity : AppCompatActivity() {
     }
     forecastRepository.weeklyForecast.observe(this, weeklyForecastObserver)
 
+  }
+
+  private fun showForecastDetails(forecast: DailyForecast) {
+    val forecastDetailsIntent = Intent(this, ForecastDetailsActivity::class.java)
+    forecastDetailsIntent.putExtra("key_temp", forecast.temp)
+    forecastDetailsIntent.putExtra("key_description", forecast.description)
+    startActivity(forecastDetailsIntent)
   }
 }

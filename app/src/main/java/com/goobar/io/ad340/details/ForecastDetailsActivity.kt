@@ -9,22 +9,33 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import com.goobar.io.ad340.R
+import com.goobar.io.ad340.TempDisplaySetting
+import com.goobar.io.ad340.TempDisplaySettingManager
 import com.goobar.io.ad340.formatTempForDisplay
 
 class ForecastDetailsActivity : AppCompatActivity() {
+
+    private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forecast_details)
 
+        tempDisplaySettingManager = TempDisplaySettingManager(this)
+
         setTitle(R.string.forecast_details)
 
+        bindForecastData()
+    }
+
+    private fun bindForecastData() {
         val tempText = findViewById<TextView>(R.id.tempText)
         val descriptionText = findViewById<TextView>(R.id.descriptionText)
 
         val temp = intent.getFloatExtra("key_temp", 0f)
-        tempText.text = formatTempForDisplay(temp)
+        tempText.text = formatTempForDisplay(temp, tempDisplaySettingManager.getTempDisplaySetting())
         descriptionText.text = intent.getStringExtra("key_description")
     }
 
@@ -51,11 +62,14 @@ class ForecastDetailsActivity : AppCompatActivity() {
             .setMessage("Choose which temperature unit to use for temperature display")
             .setPositiveButton("F°", object: DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
-                    Toast.makeText(this@ForecastDetailsActivity, "show using F°", Toast.LENGTH_SHORT).show()
+                    tempDisplaySettingManager.updateSetting(TempDisplaySetting.Fahrenheit)
                 }
             })
             .setNeutralButton("C°") { _,_ ->
-                Toast.makeText(this@ForecastDetailsActivity, "show using C°", Toast.LENGTH_SHORT).show()
+                tempDisplaySettingManager.updateSetting(TempDisplaySetting.Celsius)
+            }
+            .setOnDismissListener {
+                Toast.makeText(this, "Setting will take affect on app restart", Toast.LENGTH_SHORT).show()
             }
 
         dialogBuilder.show()

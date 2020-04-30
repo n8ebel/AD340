@@ -37,9 +37,6 @@ class MainActivity : AppCompatActivity() {
     val dailyForecastList: RecyclerView = findViewById(R.id.dailyForecastList)
     dailyForecastList.layoutManager = LinearLayoutManager(this)
     val dailyForecastAdapter = DailyForecastListAdapter() {
-      val msg = getString(R.string.forecast_clicked_format, it.temp, it.description)
-      Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-
       showForecastDetails(it)
     }
     dailyForecastList.adapter = dailyForecastAdapter
@@ -50,7 +47,6 @@ class MainActivity : AppCompatActivity() {
       dailyForecastAdapter.submitList(forecastItems)
     }
     forecastRepository.weeklyForecast.observe(this, weeklyForecastObserver)
-
   }
 
   private fun showForecastDetails(forecast: DailyForecast) {

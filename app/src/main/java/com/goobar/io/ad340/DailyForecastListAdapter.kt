@@ -13,9 +13,10 @@ class DailyForecastViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val tempText = view.findViewById<TextView>(R.id.tempText)
     private val descriptionText = view.findViewById<TextView>(R.id.descriptionText)
+    private val tempDisplaySettingManager = TempDisplaySettingManager(view.context)
 
     fun bind(dailyForecast: DailyForecast) {
-        tempText.text = formatTempForDisplay(dailyForecast.temp)
+        tempText.text = formatTempForDisplay(dailyForecast.temp, tempDisplaySettingManager.getTempDisplaySetting())
         descriptionText.text = dailyForecast.description
     }
 }

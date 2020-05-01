@@ -10,10 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import com.goobar.io.ad340.R
-import com.goobar.io.ad340.TempDisplaySetting
-import com.goobar.io.ad340.TempDisplaySettingManager
-import com.goobar.io.ad340.formatTempForDisplay
+import com.goobar.io.ad340.*
 
 class ForecastDetailsActivity : AppCompatActivity() {
 
@@ -49,29 +46,10 @@ class ForecastDetailsActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.tempDisplaySetting -> {
-                showTempDisplaySettingDialog()
+                showTempDisplaySettingDialog(this, tempDisplaySettingManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun showTempDisplaySettingDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
-            .setTitle("Choose Display Units")
-            .setMessage("Choose which temperature unit to use for temperature display")
-            .setPositiveButton("F°", object: DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    tempDisplaySettingManager.updateSetting(TempDisplaySetting.Fahrenheit)
-                }
-            })
-            .setNeutralButton("C°") { _,_ ->
-                tempDisplaySettingManager.updateSetting(TempDisplaySetting.Celsius)
-            }
-            .setOnDismissListener {
-                Toast.makeText(this, "Setting will take affect on app restart", Toast.LENGTH_SHORT).show()
-            }
-
-        dialogBuilder.show()
     }
 }

@@ -3,63 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     >
 
-  <TextView
-      android:id="@+id/title"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Enter your zipcode"
-      android:textSize="@dimen/title_text_height"
-      app:layout_constraintBottom_toTopOf="@+id/zipcodeEditText"
-      app:layout_constraintEnd_toEndOf="@+id/zipcodeEditText"
-      app:layout_constraintStart_toStartOf="@+id/zipcodeEditText" />
-
-  <ImageView
-      android:id="@+id/icon"
-      android:layout_width="@dimen/zipcode_entry_icon_size"
-      android:layout_height="@dimen/zipcode_entry_icon_size"
-      android:src="@drawable/ic_location_on_black_24dp"
-      app:layout_constraintBottom_toTopOf="@+id/title"
-      app:layout_constraintEnd_toEndOf="@+id/title"
-      app:layout_constraintStart_toStartOf="@+id/title" />
-
-  <EditText
-      android:id="@+id/zipcodeEditText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:hint="Enter zipcode"
-      android:inputType="number"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
+  <FrameLayout
+      android:id="@+id/fragmentContainter"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.24000001" />
-
-  <Button
-      android:id="@+id/enterButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Submit Zipcode"
-      app:layout_constraintEnd_toEndOf="@+id/zipcodeEditText"
-      app:layout_constraintStart_toStartOf="@+id/zipcodeEditText"
-      app:layout_constraintTop_toBottomOf="@+id/zipcodeEditText" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dailyForecastList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterButton"
-        tools:listitem="@layout/item_daily_forecast" />
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

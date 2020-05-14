@@ -1,8 +1,11 @@
 <resources>
-  <string name="app_name">AD 340 Weather</string>
-  <string name="forecast_details">Forecast Details</string>
+    <string name="app_name">AD 340 Weather</string>
+    <string name="forecast_details">Forecast Details</string>
 
-  <string name="zipcode_entry_error">Please enter valid zipcode</string>
+    <string name="zipcode_entry_error">Please enter valid zipcode</string>
 
-  <string name="forecast_clicked_format">Forecast: %1$.2f  %2$s</string>
+    <string name="forecast_clicked_format">Forecast: %1$.2f  %2$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

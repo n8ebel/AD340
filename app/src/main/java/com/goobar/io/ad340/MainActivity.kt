@@ -1,24 +1,18 @@
 package com.goobar.io.ad340
 
-import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.goobar.io.ad340.details.ForecastDetailsActivity
-import com.goobar.io.ad340.forecast.CurrentForecastFragment
-import com.goobar.io.ad340.location.LocationEntryFragment
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.goobar.io.ad340.forecast.CurrentForecastFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), AppNavigator {
+class MainActivity : AppCompatActivity() {
 
   private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
 
@@ -28,10 +22,13 @@ class MainActivity : AppCompatActivity(), AppNavigator {
 
     tempDisplaySettingManager = TempDisplaySettingManager(this)
 
-    supportFragmentManager
-      .beginTransaction()
-      .add(R.id.fragmentContainter, LocationEntryFragment())
-      .commit()
+    val toolbar: Toolbar = findViewById(R.id.toolbar)
+    toolbar.setTitle(R.string.app_name)
+    toolbar.inflateMenu(R.menu.settings_menu)
+    setSupportActionBar(toolbar)
+
+    val navController = findNavController(R.id.nav_host_fragment)
+    findViewById<BottomNavigationView>(R.id.bottomNavigation).setupWithNavController(navController)
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -49,19 +46,5 @@ class MainActivity : AppCompatActivity(), AppNavigator {
       }
       else -> super.onOptionsItemSelected(item)
     }
-  }
-
-  override fun navigateToCurrentForecast(zipcode: String) {
-    supportFragmentManager
-      .beginTransaction()
-      .replace(R.id.fragmentContainter, CurrentForecastFragment.newInstance(zipcode))
-      .commit()
-  }
-
-  override fun navigateToLocationEntry() {
-    supportFragmentManager
-      .beginTransaction()
-      .replace(R.id.fragmentContainter, LocationEntryFragment())
-      .commit()
   }
 }

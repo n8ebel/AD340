@@ -1,6 +1,5 @@
 package com.goobar.io.ad340.location
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,22 +8,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.goobar.io.ad340.AppNavigator
+import androidx.navigation.fragment.findNavController
 
 import com.goobar.io.ad340.R
 
+/**
+ * Allows user to save a location using zipcode
+ * This location is then used to determine which forecast to load
+ */
 class LocationEntryFragment : Fragment() {
-
-    private lateinit var appNavigator: AppNavigator
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        appNavigator = context as AppNavigator
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +33,7 @@ class LocationEntryFragment : Fragment() {
             if (zipcode.length != 5) {
                 Toast.makeText(context, R.string.zipcode_entry_error, Toast.LENGTH_SHORT).show()
             } else {
-                appNavigator.navigateToCurrentForecast(zipcode)
+                findNavController().navigateUp()
             }
         }
 

@@ -21,7 +21,11 @@ import java.util.*
 class ForecastDetailsFragment : Fragment() {
 
     private val args: ForecastDetailsFragmentArgs by navArgs()
-    private val viewModel: ForecastDetailsViewModel by viewModels()
+
+    private lateinit var viewModelFactory: ForecastDetailsViewModelFactory
+    private val viewModel: ForecastDetailsViewModel by viewModels(
+        factoryProducer = { viewModelFactory }
+    )
 
     private var _binding: FragmentForecastDetailsBinding? = null
     // This property only valid between onCreateView and onDestroyView
@@ -32,6 +36,7 @@ class ForecastDetailsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
         tempDisplaySettingManager = TempDisplaySettingManager(requireContext())
+        viewModelFactory = ForecastDetailsViewModelFactory(args)
         return binding.root
     }
 
@@ -44,7 +49,6 @@ class ForecastDetailsFragment : Fragment() {
             binding.forecastIcon.load(viewState.iconUrl)
         }
         viewModel.viewState.observe(viewLifecycleOwner, viewStateObserver)
-        viewModel.processArgs(args)
     }
 
     override fun onDestroyView() {

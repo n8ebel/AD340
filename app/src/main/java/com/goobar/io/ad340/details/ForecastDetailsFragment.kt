@@ -5,11 +5,13 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import coil.api.load
 import com.goobar.io.ad340.*
 import com.goobar.io.ad340.databinding.FragmentForecastDetailsBinding
@@ -19,7 +21,7 @@ import java.util.*
 class ForecastDetailsFragment : Fragment() {
 
     private val args: ForecastDetailsFragmentArgs by navArgs()
-    private val viewModel = ForecastDetailsViewModel()
+    private val viewModel: ForecastDetailsViewModel by viewModels()
 
     private var _binding: FragmentForecastDetailsBinding? = null
     // This property only valid between onCreateView and onDestroyView

@@ -14,6 +14,8 @@ class ForecastDetailsViewModel : ViewModel() {
     val viewState: LiveData<ForecastDetailsViewState> = _viewState
 
     fun processArgs(args: ForecastDetailsFragmentArgs) {
+        if(_viewState.value != null) return
+
         _viewState.value = ForecastDetailsViewState(
             temp = args.temp,
             description = args.description,

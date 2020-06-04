@@ -9,7 +9,9 @@ data class Coordinates(val lat: Float, val lon: Float)
  * Api response for OpenWeatherMap's /weather endpoint
  */
 data class CurrentWeather(
+    @field:Json(name = "dt") val date: Long,
     val name: String,
     val coord: Coordinates,
-    @field:Json(name = "main") val forecast: Forecast
+    @field:Json(name = "main") val forecast: Forecast,
+    val weather: List<WeatherDescription>
 )

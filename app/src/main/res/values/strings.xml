@@ -11,4 +11,7 @@
 
     <string name="bottom_nav_label_today">Today</string>
     <string name="bottom_nav_label_week">Week</string>
+
+    <string name="no_current_weather_message">Enter a zipcode to display current weather</string>
+    <string name="no_weekly_forecast_message">Enter a zipcode to display weekly forecast</string>
 </resources>

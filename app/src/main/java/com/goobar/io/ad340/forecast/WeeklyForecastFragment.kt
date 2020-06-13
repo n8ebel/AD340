@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +40,9 @@ class WeeklyForecastFragment : Fragment() {
 
         tempDisplaySettingManager = TempDisplaySettingManager(requireContext())
 
+        val emptyMsg = view.findViewById<TextView>(R.id.emptyMessage)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+
         val dailyForecastList: RecyclerView = view.findViewById(R.id.dailyForecastList)
         dailyForecastList.layoutManager = LinearLayoutManager(requireContext())
         val dailyForecastAdapter = DailyForecastListAdapter(tempDisplaySettingManager) {
@@ -47,6 +52,10 @@ class WeeklyForecastFragment : Fragment() {
 
         // Create the observer which updates the UI in response to forecast updates
         val weeklyForecastObserver = Observer<WeeklyForecast> { weeklyForecast ->
+            emptyMsg.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            dailyForecastList.visibility = View.VISIBLE
+
             // update our list adapter
             dailyForecastAdapter.submitList(weeklyForecast.daily)
         }
@@ -60,7 +69,10 @@ class WeeklyForecastFragment : Fragment() {
         locationRepository = LocationRepository(requireContext())
         val savedLocationObserver = Observer<Location> { savedLocation ->
             when (savedLocation) {
-                is Location.Zipcode -> forecastRepository.loadWeeklyForecast(savedLocation.zipcode)
+                is Location.Zipcode -> {
+                    progressBar.visibility = View.VISIBLE
+                    forecastRepository.loadWeeklyForecast(savedLocation.zipcode)
+                }
             }
         }
         locationRepository.savedLocation.observe(viewLifecycleOwner, savedLocationObserver)
